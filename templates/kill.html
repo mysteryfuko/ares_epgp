@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ares公会活动分数</title>
+    <!--table-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.0/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/rowgroup/1.1.1/js/dataTables.rowGroup.min.js"></script>
+    <!--wowhead-->
+    <script>var whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true};</script>
+    <script src="https://wow.zamimg.com/widgets/power.js"></script>
+    <style>
+               .HUNTER {
+            background-color: #aad372!important;
+        }
+                .WARRIOR {
+            background-color: #c69b6d!important;
+        }
+                .ROGUE {
+            background-color: #fff468!important;
+        }
+                .MAGE {
+            background-color: #3fc6ea!important;
+        }
+                .PRIEST {
+            background-color: #ffffff!important;
+        }
+                .WARLOCK {
+            background-color: #8787ed!important;
+        }
+                .DRUID {
+            background-color: #ff7c0a!important;
+        }
+                .PALADIN {
+            background-color: #f48cba!important;
+        }
+                .SHAMAN {
+            background-color: #0270dd!important;
+        }
+                .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+      
+        /* Style the buttons that are used to open the tab content */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+  <H1>Ares - XXX</H1>
+  <div class="tab">
+    <a href="../"><button class="tablinks" >主页</button></a>
+  </div>
+  <div id="LogsTab" class="tabcontent">
+    <table id="logsTable" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th width="20%">时间</th>
+          <th width="20%">原因</th>
+          <th width="10%">DKP变化</th>
+          <th>参与人员</th>
+        </tr>
+      </thead>    
+
+      <tr  role="row" class="odd">
+        <th>2020年6月19日15:20:43</th>
+        <th>击杀加尔击杀加尔击杀加尔</th>
+        <th>+5</th>
+        <th >Spirithunter	Suedaiba	丶粪海仙蛆丶	傑尼亀	其实不麻烦
+          出雲小胖	剑锋丨所指	名为你的诗	四月你的謊言	大米饺子
+          奥州鲍	奶不住人	小悠悠呢	小米饺子	我是坦克哥
+          我隐了	明明是个女孩	星河入梦	歐米茄	永恒的痕迹
+          泽明	湛王	满目星河	熊猫炒河粉	爆浆南瓜饼
+          猎小白	猫系棉花糖	甜心千雾	白鹿丶青崖	笨憨
+          等风来追风去	维他命三号氵	趴下有凶器	锤爆诸位的蛋	阿尼戈尼
+          霜写秋叶	霹雳娇娘	鬼步无痕	鲸落丶南北 22233</th>
+      </tr>
+      <tfoot>
+        <tr>
+          <th>时间</th>
+          <th>名字</th>
+          <th>DKP变化</th>
+          <th>参与人员</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+      var logsTable = $('#logsTable').DataTable({
+            pageLength: 50,
+            order: [ [ 0, 'desc' ] ],
+            
+        });  
+    });
+</script>
+</body>
+</html>
