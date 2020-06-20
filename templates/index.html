@@ -157,7 +157,7 @@
             <th>时间</th>
             <th>名字</th>
             <th>职业</th>
-            <th>物品GP</th>
+            <th>物品DKP</th>
             <th>装备</th>
         </tr>
       </thead>                           
@@ -166,7 +166,7 @@
           <th>时间</th>
           <th>名字</th>
           <th>职业</th>
-          <th>物品GP</th>
+          <th>物品DKP</th>
           <th>装备</th>
         </tr>
       </tfoot>
@@ -243,8 +243,8 @@
     $(document).ready(function () {
         var epgpTable = $('#epgpTable').DataTable({
             pageLength: 50,
-            order: [ [ 0, 'asc' ] ],
-            "ajax": "epgp",
+            order: [ [ 4, 'desc' ] ],
+            "ajax": "ajax/epgp",
             "columns":[
               {data:"name"},
               {data:"class"},
@@ -261,7 +261,7 @@
               },
               {
                 "render":function (data,type,row){
-                  return "<a href=\"PlayerDetail\\?" + row['name'] + "\" style=\"color: black\">" + row["name"] +"</a>"
+                  return "<a href=\"PlayerDetail\\" + row['name'] + "\" style=\"color: black\">" + row["name"] +"</a>"
                 },
                 "targets":0
               },
@@ -304,7 +304,7 @@
         var epgplogsTable = $('#EpgplogsTable').DataTable({
             pageLength: 50,
             order: [ [ 0, 'desc' ] ],
-            "ajax": "epgplog",
+            "ajax": "ajax/epgplootlog",
             "columns":[
               {data:"time"},
               {data:"name"},
@@ -358,7 +358,7 @@
         var dkpTable = $('#dkpTable').DataTable({
             pageLength: 50,
             order: [ [ 0, 'asc' ] ],
-            "ajax": "dkp",
+            "ajax": "ajax/dkp",
             "columns":[
               {data:"name"},
               {data:"class"},
@@ -411,9 +411,9 @@
         var epgplogsTable1 = $('#epgplogsTable1').DataTable({
             pageLength: 50,
             order: [ [ 0, 'desc' ] ],
-            "ajax": "epgplog1",
+            "ajax": "ajax/epgpaddlog",
             "columns":[
-              {data:"name"},
+              {data:"boss"},
               {data:"ep"},
               {data:"player"},
               {data:"time"},
@@ -421,7 +421,7 @@
             "columnDefs":[
               {
                 "render":function (data,type,row){
-                  return "<a href=\"kill\\?" + row['id'] + "\" style=\"color: black\">" + row["name"] +"</a>"
+                  return "<a href=\"kill\\" + row['id'] + "\" style=\"color: black\">" + row["boss"] +"</a>"
                 },
                 "targets":0
               },
@@ -431,7 +431,7 @@
         var dkplogsTable1 = $('#dkplogsTable1').DataTable({
             pageLength: 50,
             order: [ [ 0, 'desc' ] ],
-            "ajax": "dkplog1",
+            "ajax": "ajax/dkpaddlog",
             "columns":[
               {data:"name"},
               {data:"dkp"},
@@ -441,7 +441,7 @@
             "columnDefs":[
               {
                 "render":function (data,type,row){
-                  return "<a href=\"kill\\?" + row['id'] + "\" style=\"color: black\">" + row["name"] +"</a>"
+                  return "<a href=\"kill\\" + row['id'] + "\" style=\"color: black\">" + row["name"] +"</a>"
                 },
                 "targets":0
               },
@@ -451,7 +451,7 @@
         var dkplogsTable = $('#dkplogsTable').DataTable({
             pageLength: 50,
             order: [ [ 0, 'desc' ] ],
-            "ajax": "dkplog",
+            "ajax": "ajax/dkplootlog",
             "columns":[
               {data:"time"},
               {data:"name"},

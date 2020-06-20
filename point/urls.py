@@ -1,17 +1,17 @@
 from django.urls import path
-
+from django.urls import include, path
 from . import views
+from django.conf import settings
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('epgp',views.epgp),
-    path('epgplog',views.epgplog),
-    path('epgplog1',views.epgplog1),
-    path('dkp',views.dkp),
-    path('dkplog',views.dkplog),
-    path('dkplog1',views.dkplog1),
-    path('PlayerDetail/',views.PlayerDetail),
-    path('Playerepgplog/',views.Playerepgplog),
-    path('Playerdkplog/',views.Playerdkplog),
-    path('kill/',views.kill),
+    path('PlayerDetail/<str>/',views.PlayerDetail),
+    path('kill/<id>/',views.kill),
+    path('ajax/<str:action>/',views.ajax),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

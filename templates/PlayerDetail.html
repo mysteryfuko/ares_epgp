@@ -13,6 +13,7 @@
     <!--wowhead-->
     <script>var whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true};</script>
     <script src="https://wow.zamimg.com/widgets/power.js"></script>
+
     <style>
                .HUNTER {
             background-color: #aad372!important;
@@ -81,7 +82,7 @@
 <div class="container">
   <H1>Ares - XXX</H1>
   <div class="tab">
-    <a href="../"><button class="tablinks" >主页</button></a>
+    <a href="/"><button class="tablinks" >主页</button></a>
     <button class="tablinks" onclick="selectTab(event, 'EpgpLogsTab')">EPGP变化记录</button>
     <button class="tablinks" onclick="selectTab(event, 'dkpLogsTab')">DKP变化记录</button>
   </div>
@@ -89,7 +90,7 @@
     <table id="EpgplogsTable" class="display" style="width:100%">
       <thead>
         <tr>
-          <th>时间</th>
+          <th>时间{{url_parts.domain}}</th>
           <th>名字</th>
           <th>ep变化</th>
           <th>gp变化</th>
@@ -159,7 +160,7 @@
         var epgplogsTable = $('#EpgplogsTable').DataTable({
             pageLength: 50,
             order: [ [ 0, 'desc' ] ],
-            "ajax": "../Playerepgplog",
+            "ajax": "/ajax/Playerepgplog",
             "columns":[
               {data:"time"},
               {data:"name"},
@@ -190,7 +191,7 @@
         var dkplogsTable = $('#dkplogsTable').DataTable({
             pageLength: 50,
             order: [ [ 0, 'desc' ] ],
-            "ajax": "../Playerdkplog",
+            "ajax": "/ajax/Playerdkplog",
             "columns":[
               {data:"time"},
               {data:"name"},
