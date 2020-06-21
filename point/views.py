@@ -46,16 +46,16 @@ def ajax(request,action):
       json_dict["id"] = i.id      
       json_dict["item"] = i.item
       json_dict["gp"] = i.gp
-      json_dict["class"] = score.objects.get(id=i.name).job
+      json_dict["class"] = score.objects.get(name=i.name).job
       json_dict["time"] = i.time.strftime("%Y-%m-%d %H:%M:%S")
-      json_dict["name"] = score.objects.get(id=i.name).name
+      json_dict["name"] = i.name
       json_list.append(json_dict)
     data ={"data":json_list}
     return HttpResponse(json.dumps(data))
 
     #ajax返回总ep奖励记录 {,"ep":"22","player":"18404","},
   if action == "epgpaddlog":
-    KillLog = record.objects.filter(ep__isnull=False,boss__gt="")
+    KillLog = record.objects.filter(boss__gt="").exclude(ep=0)
     json_list = []
     for i in KillLog:
       json_dict = {}
@@ -77,9 +77,9 @@ def ajax(request,action):
       json_dict["id"] = i.id      
       json_dict["item"] = i.item
       json_dict["dkp"] = i.dkp
-      json_dict["class"] = score.objects.get(id=i.name).job
+      json_dict["class"] = score.objects.get(name=i.name).job
       json_dict["time"] = i.time.strftime("%Y-%m-%d %H:%M:%S")
-      json_dict["name"] = score.objects.get(id=i.name).name
+      json_dict["name"] = i.name
       json_list.append(json_dict)
     data ={"data":json_list}
     return HttpResponse(json.dumps(data))
@@ -104,8 +104,7 @@ def ajax(request,action):
 
   if action == "Playerepgplog":
     name = request.GET["name"]
-    nameid = score.objects.get(name=name).id
-    logs = record.objects.extra(where=['"point_record"."dkp" IS NULL AND "point_record"."name" LIKE "'+str(nameid)+',%%") OR ("point_record"."dkp" IS NULL AND "point_record"."name" = "' + str(nameid) +'") OR("point_record"."dkp" IS NULL AND "point_record"."name" LIKE "%%,'+str(nameid)+',%%"'])
+    logs = record.objects.extra(where=['"point_record"."ep" <> 0 AND "point_record"."name" LIKE "'+str(name)+',%%") OR ("point_record"."ep" <> 0 AND "point_record"."name" = "' + str(name) +'") OR("point_record"."ep" <> 0 AND "point_record"."name" LIKE "%%,'+str(name)+',%%"'])
     json_list = []
     for i in logs:
       json_dict = {}
@@ -124,7 +123,7 @@ def ajax(request,action):
   if action == "Playerdkplog":
     name = request.GET["name"]
     nameid = score.objects.get(name=name).id
-    logs = record.objects.extra(where=['"point_record"."dkp" IS NOT NULL AND "point_record"."name" LIKE "'+str(nameid)+',%%") OR ("point_record"."dkp" IS NOT NULL AND "point_record"."name" = "' + str(nameid) +'") OR("point_record"."dkp" IS NOT NULL AND "point_record"."name" LIKE "%%,'+str(nameid)+',%%"'])
+    logs = record.objects.extra(where=['"point_record"."dkp" <> 0 AND "point_record"."name" LIKE "'+str(name)+',%%") OR ("point_record"."dkp" <> 0 AND "point_record"."name" = "' + str(name) +'") OR("point_record"."dkp" <> 0 AND "point_record"."name" LIKE "%%,'+str(name)+',%%"'])
     json_list = []
     for i in logs:
       json_dict = {}
@@ -145,18 +144,13 @@ def PlayerDetail(request,name):
 def kill(request,bossid):
   KillLog = record.objects.get(id=int(bossid))
   name = KillLog.name.split(',')
-  Playername = []
-  for i in name:
-    json_dict = {}
-    json_dict["id"] = i
-    Playername.append(score.objects.get(id=i).name)
   renderData = {
     "id":bossid,
     "time":KillLog.time,
     "boss":KillLog.boss,
     "ep":KillLog.ep,
     "dkp":KillLog.dkp,
-    "name":Playername
+    "name":name
   }
   #print(renderData)
   return render(request,'kill.html',renderData)

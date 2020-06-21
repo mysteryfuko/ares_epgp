@@ -357,7 +357,7 @@
         });
         var dkpTable = $('#dkpTable').DataTable({
             pageLength: 50,
-            order: [ [ 0, 'asc' ] ],
+            order: [ [ 2, 'desc' ] ],
             "ajax": "ajax/dkp",
             "columns":[
               {data:"name"},
@@ -396,7 +396,7 @@
               },
               {
                 "render":function (data,type,row){
-                  return "<a href=\"PlayerDetail\\?" + row['name'] + "\" style=\"color: black\">" + row["name"] +"</a>"
+                  return "<a href=\"PlayerDetail\\" + row['name'] + "\" style=\"color: black\">" + row["name"] +"</a>"
                 },
                 "targets":0
               },
@@ -410,7 +410,7 @@
 
         var epgplogsTable1 = $('#epgplogsTable1').DataTable({
             pageLength: 50,
-            order: [ [ 0, 'desc' ] ],
+            order: [ [ 3, 'desc' ] ],
             "ajax": "ajax/epgpaddlog",
             "columns":[
               {data:"boss"},
@@ -430,7 +430,7 @@
 
         var dkplogsTable1 = $('#dkplogsTable1').DataTable({
             pageLength: 50,
-            order: [ [ 0, 'desc' ] ],
+            order: [ [ 3, 'desc' ] ],
             "ajax": "ajax/dkpaddlog",
             "columns":[
               {data:"name"},
