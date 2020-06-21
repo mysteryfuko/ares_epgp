@@ -1,17 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import score,record
-from django.core import serializers
 import json
+import datetime
+from django.core import serializers
 
-class DateEncoder(json.JSONEncoder):  
-    def default(self, obj):  
-        if isinstance(obj, datetime.datetime):  
-            return obj.strftime('%Y-%m-%d %H:%M:%S')  
-        elif isinstance(obj, datetime.date):  
-            return obj.strftime("%Y-%m-%d")  
-        else:  
-            return json.JSONEncoder.default(self, obj)
 
 def index(request):
     return render(request,'index.html')
@@ -90,7 +83,7 @@ def ajax(request,action):
       json_list.append(json_dict)
     data ={"data":json_list}
     return HttpResponse(json.dumps(data))
-
+    
 
       #ajax返回总dkp奖励记录
   if action == "dkpaddlog":
@@ -110,32 +103,60 @@ def ajax(request,action):
 
 
   if action == "Playerepgplog":
-    data = {
-      "data":[
-        {"time":"2020-06-17 09:30","name":"锤蛋","ep":"","gp":"+250","item":"18404","activeID":"","active":""},
-        {"time":"2020-06-17 10:30","name":"锤蛋","ep":"","gp":"+320","item":"12404","activeID":"","active":""},
-        {"time":"2020-06-17 11:30","name":"锤蛋","ep":"+40","gp":"","item":"","activeID":"1","active":"加尔"}
-        ]
-      }
+    name = request.GET["name"]
+    nameid = score.objects.get(name=name).id
+    logs = record.objects.extra(where=['"point_record"."dkp" IS NULL AND "point_record"."name" LIKE "'+str(nameid)+',%%") OR ("point_record"."dkp" IS NULL AND "point_record"."name" = "' + str(nameid) +'") OR("point_record"."dkp" IS NULL AND "point_record"."name" LIKE "%%,'+str(nameid)+',%%"'])
+    json_list = []
+    for i in logs:
+      json_dict = {}
+      json_dict["name"] = name
+      json_dict["activeID"] = i.id      
+      json_dict["time"] = i.time.strftime("%Y-%m-%d %H:%M:%S")
+      json_dict["ep"] = i.ep
+      json_dict["gp"] = i.gp
+      json_dict["item"] = i.item 
+      json_dict["active"] = i.boss 
+      json_list.append(json_dict)
+    data ={"data":json_list}
+
     return HttpResponse(json.dumps(data))
 
   if action == "Playerdkplog":
-    data = {
-      "data":[
-        {"time":"2020-06-17 09:30","name":"锤蛋","dkp":"-20","item":"18404","activeID":"","active":""},
-        {"time":"2020-06-17 10:30","name":"锤蛋","dkp":"-20","item":"12404","activeID":"","active":""},
-        {"time":"2020-06-17 11:30","name":"锤蛋","dkp":"+5","item":"","activeID":"1","active":"加尔"}
-        ]
-      }
+    name = request.GET["name"]
+    nameid = score.objects.get(name=name).id
+    logs = record.objects.extra(where=['"point_record"."dkp" IS NOT NULL AND "point_record"."name" LIKE "'+str(nameid)+',%%") OR ("point_record"."dkp" IS NOT NULL AND "point_record"."name" = "' + str(nameid) +'") OR("point_record"."dkp" IS NOT NULL AND "point_record"."name" LIKE "%%,'+str(nameid)+',%%"'])
+    json_list = []
+    for i in logs:
+      json_dict = {}
+      json_dict["name"] = name
+      json_dict["activeID"] = i.id      
+      json_dict["time"] = i.time.strftime("%Y-%m-%d %H:%M:%S")
+      json_dict["dkp"] = i.dkp
+      json_dict["item"] = i.item 
+      json_dict["active"] = i.boss 
+      json_list.append(json_dict)
+    data ={"data":json_list}
     return HttpResponse(json.dumps(data))
 
-
-  return HttpResponse(json.dumps(data))
-  
-def PlayerDetail(request,**keyword ):
-  return render(request,'PlayerDetail.html')
+def PlayerDetail(request,name):
+  return render(request,'PlayerDetail.html',{"name":name})
 
   
-
-def kill(request,id):
-  return HttpResponse(id)
+def kill(request,bossid):
+  KillLog = record.objects.get(id=int(bossid))
+  name = KillLog.name.split(',')
+  Playername = []
+  for i in name:
+    json_dict = {}
+    json_dict["id"] = i
+    Playername.append(score.objects.get(id=i).name)
+  renderData = {
+    "id":bossid,
+    "time":KillLog.time,
+    "boss":KillLog.boss,
+    "ep":KillLog.ep,
+    "dkp":KillLog.dkp,
+    "name":Playername
+  }
+  #print(renderData)
+  return render(request,'kill.html',renderData)

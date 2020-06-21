@@ -5,8 +5,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('PlayerDetail/<str>/',views.PlayerDetail),
-    path('kill/<id>/',views.kill),
+    path('PlayerDetail/<str:name>/',views.PlayerDetail),
+    path('kill/<int:bossid>/',views.kill),
     path('ajax/<str:action>/',views.ajax),
 ]
 

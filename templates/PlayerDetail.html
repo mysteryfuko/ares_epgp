@@ -80,7 +80,7 @@
 </head>
 <body>
 <div class="container">
-  <H1>Ares - XXX</H1>
+  <H1>Ares - {{name}}</H1>
   <div class="tab">
     <a href="/"><button class="tablinks" >主页</button></a>
     <button class="tablinks" onclick="selectTab(event, 'EpgpLogsTab')">EPGP变化记录</button>
@@ -160,7 +160,7 @@
         var epgplogsTable = $('#EpgplogsTable').DataTable({
             pageLength: 50,
             order: [ [ 0, 'desc' ] ],
-            "ajax": "/ajax/Playerepgplog",
+            "ajax": {"url":"/ajax/Playerepgplog","data":{"name":"{{name}}"},},
             "columns":[
               {data:"time"},
               {data:"name"},
@@ -174,13 +174,31 @@
                   if (row["item"]){
                     return '<a href="https://cn.classic.wowhead.com/item=' + row["item"] + '/" class="icontinyl q4" data-wh-icon-added="true" ><span></span></a>';
                   }
-                  else if(row["item"] == ""){
-                    return '<a href="../kill/?' + row["activeID"] + '/"><span>击杀' + row["active"] + '</span></a>';
+                  else if(!row["item"]){
+                    return '<a href="../kill/' + row["activeID"] + '/"><span>击杀' + row["active"] + '</span></a>';
                   }
                   
                 },
                 "targets":4
-              }
+              },
+              {
+                "render":function (data,type,row){
+                  if(row["ep"])
+                    return '+'+row["ep"];
+                  else
+                    return row["ep"]            
+                },
+                "targets":2
+              },
+              {
+                "render":function (data,type,row){
+                  if(row["gp"])
+                    return '+'+row["gp"];
+                  else
+                    return row["gp"]            
+                },
+                "targets":3
+              },
             ],
             //每行回调函数  
             "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) { 
@@ -191,7 +209,7 @@
         var dkplogsTable = $('#dkplogsTable').DataTable({
             pageLength: 50,
             order: [ [ 0, 'desc' ] ],
-            "ajax": "/ajax/Playerdkplog",
+            "ajax": {"url":"/ajax/Playerdkplog","data":{"name":"{{name}}"},},
             "columns":[
               {data:"time"},
               {data:"name"},
@@ -204,12 +222,21 @@
                   if (row["item"]){
                     return '<a href="https://cn.classic.wowhead.com/item=' + row["item"] + '/" class="icontinyl q4" data-wh-icon-added="true" ><span></span></a>';
                   }
-                  else if(row["item"] == ""){
-                    return '<a href="../kill/?' + row["activeID"] + '/"><span>击杀' + row["active"] + '</span></a>';
+                  else if(!row["item"]){
+                    return '<a href="../kill/' + row["activeID"] + '/"><span>击杀' + row["active"] + '</span></a>';
                   }
                 },
                 "targets":3
-              }
+              },
+              {
+                "render":function (data,type,row){
+                  if(row["active"])
+                    return '+'+row["dkp"];
+                  else
+                    return '-'+row["dkp"]            
+                },
+                "targets":2
+              },
             ],
             //每行回调函数  
             "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) { 

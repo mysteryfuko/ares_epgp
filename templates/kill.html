@@ -79,9 +79,9 @@
 </head>
 <body>
 <div class="container">
-  <H1>Ares - XXX</H1>
+  <H1>Ares - {{boss}}</H1>
   <div class="tab">
-    <a href="../"><button class="tablinks" >主页</button></a>
+    <a href="/"><button class="tablinks" >主页</button></a>
   </div>
   <div id="LogsTab" class="tabcontent">
     <table id="logsTable" class="display" style="width:100%">
@@ -89,29 +89,44 @@
         <tr>
           <th width="20%">时间</th>
           <th width="20%">原因</th>
-          <th width="10%">DKP变化</th>
+          <th width="10%">
+          {% if ep %}
+          EP变化
+          {% else %}
+          DKP变化
+          {% endif %}
+          </th>
           <th>参与人员</th>
         </tr>
       </thead>    
 
       <tr  role="row" class="odd">
-        <th>2020年6月19日15:20:43</th>
-        <th>击杀加尔击杀加尔击杀加尔</th>
-        <th>+5</th>
-        <th >Spirithunter	Suedaiba	丶粪海仙蛆丶	傑尼亀	其实不麻烦
-          出雲小胖	剑锋丨所指	名为你的诗	四月你的謊言	大米饺子
-          奥州鲍	奶不住人	小悠悠呢	小米饺子	我是坦克哥
-          我隐了	明明是个女孩	星河入梦	歐米茄	永恒的痕迹
-          泽明	湛王	满目星河	熊猫炒河粉	爆浆南瓜饼
-          猎小白	猫系棉花糖	甜心千雾	白鹿丶青崖	笨憨
-          等风来追风去	维他命三号氵	趴下有凶器	锤爆诸位的蛋	阿尼戈尼
-          霜写秋叶	霹雳娇娘	鬼步无痕	鲸落丶南北 22233</th>
+        <th>{{time}}</th>
+        <th>{{boss}}</th>
+        <th>
+        {% if ep %}
+        +{{ep}}
+        {% else %}
+        +{{dkp}}
+        {% endif %}
+        </th>
+        <th>
+        {% for i in name %}
+        <a href="/PlayerDetail/{{i}}">{{i}}</a>&nbsp;&nbsp;
+        {% endfor %}
+        </th>
       </tr>
       <tfoot>
         <tr>
           <th>时间</th>
           <th>名字</th>
-          <th>DKP变化</th>
+          <th width="10%">
+          {% if ep %}
+          EP变化
+          {% else %}
+          DKP变化
+          {% endif %}
+          </th>
           <th>参与人员</th>
         </tr>
       </tfoot>
