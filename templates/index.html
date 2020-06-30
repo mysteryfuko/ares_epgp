@@ -255,7 +255,7 @@
             "columnDefs":[
               {
                 "render":function (data,type,row){
-                  return (parseInt(row['ep'])/(parseInt(row['gp'])+300)).toFixed(3)
+                  return (parseFloat(row['ep'])/(parseFloat(row['gp'])+300)).toFixed(3)
                 },
                 "targets":4
               },
@@ -424,6 +424,12 @@
                   return "<a href=\"kill\\" + row['id'] + "\" style=\"color: black\">" + row["boss"] +"</a>"
                 },
                 "targets":0
+              },
+              {
+                "render":function (data,type,row){
+                  if(!row['ep']){return row["boss"]}else{return "+" + row['ep']}         
+                },
+                "targets":1
               },
             ],        
         });

@@ -90,10 +90,10 @@
           <th width="20%">时间</th>
           <th width="20%">原因</th>
           <th width="10%">
-          {% if ep %}
-          EP变化
-          {% else %}
+          {% if dkp %}
           DKP变化
+          {% else %}
+          EP变化
           {% endif %}
           </th>
           <th>参与人员</th>
@@ -106,8 +106,10 @@
         <th>
         {% if ep %}
         +{{ep}}
-        {% else %}
+        {% elif dkp %}
         +{{dkp}}
+        {% else %}
+        EPGP{{boss}}
         {% endif %}
         </th>
         <th>
@@ -121,10 +123,10 @@
           <th>时间</th>
           <th>名字</th>
           <th width="10%">
-          {% if ep %}
-          EP变化
-          {% else %}
+          {% if dkp %}
           DKP变化
+          {% else %}
+          EP变化
           {% endif %}
           </th>
           <th>参与人员</th>
