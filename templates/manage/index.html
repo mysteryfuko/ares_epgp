@@ -52,10 +52,13 @@
       </div>
 
       <div class="tab-pane fade" id="loot">
+      </br></br></br>
+      <a href="/static/loot_templates.xls">下载loot模板</a></br></br></br>
+
         <form action="/do_loot/" method="post" enctype="multipart/form-data" >{% csrf_token %}
        {{ obj.file }}
         <input type="submit" value="上传">
-        </form>
+        </form>        
       </div>
 
       <div class="tab-pane fade" id="down">
