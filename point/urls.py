@@ -14,7 +14,8 @@ urlpatterns = [
     path('PlayerDetail/<str:name>/',views.PlayerDetail),
     path('kill/<int:bossid>/',views.kill),
     path('ajax/<str:action>/',views.ajax),
-    path('down/',views.down),
+    path('down_dkp/',views.down_dkp),
+    path('down_epgp/',views.down_epgp),
     path('do_loot/',manage.do_loot),
     path('manage/',include(manage_patterns)),
 ]

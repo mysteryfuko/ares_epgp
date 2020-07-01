@@ -1,5 +1,6 @@
 import requests
 import sqlite3
+from retrying import retry
 import time
 from .models import score,record,xiaohao
 import zipfile
@@ -97,7 +98,7 @@ def get_fight_data(fight_id):
     player_data.append(temp) #{'boss': '鲁西弗隆', 'dkp': 2, 'epgp': 40, 'name': '锤爆诸位的蛋,小悠悠呢,四月你的謊言,剑...rithunter,', 'time': 1049294}
 
   #全程分分析
-  """ where_to_do = "正在分析全程分"
+  where_to_do = "正在分析全程分"
   a = len(player_data)
   b = player_data[0]['name'].split(',')
   c = player_data[(a-1)]['name'].split(',')
@@ -108,12 +109,9 @@ def get_fight_data(fight_id):
         all_name = all_name + i +","
   temp = {'boss':"全程分",'name':all_name,'epgp':40,'dkp':5,'time':player_data[(a-1)]["time"]}
   where_to_do = "已完成分析集合分,共计{}人".format(player_num)
-  player_data.append(temp) """
-  #全程分分析
-  where_to_do = "正在分析全程分"
-  a = len(player_data)
-  player_data.append(player_data[(a-1)]) 
-  player_data[(a-1)]['dkp'] = 5
+  player_data.append(temp) 
+
+
 
   where_to_do = "正在写入数据"
   #备份
